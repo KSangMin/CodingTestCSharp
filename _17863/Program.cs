@@ -1,0 +1,1 @@
+﻿Console.WriteLine(Console.ReadLine()!.Substring(0, 3) == "555" ? "YES" : "NO");
