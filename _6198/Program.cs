@@ -1,12 +1,12 @@
 ﻿int n = int.Parse(Console.ReadLine()!);
 
-int count = 0;
+long count = 0;
 Stack<int> st = new();
 for (int i = 0; i < n; i++)
 {
     int h = int.Parse(Console.ReadLine()!);
 
-    while (st.Count > 0 && st.Peek() < h)
+    while (st.Count > 0 && st.Peek() <= h)
     {
         st.Pop();
     }
