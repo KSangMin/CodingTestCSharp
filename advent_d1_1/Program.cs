@@ -5,26 +5,26 @@ int ans = 0;
 for (int i = 0; i < n; i++)
 {
     string input = Console.ReadLine()!;
-
     int num = int.Parse(input.Substring(1));
 
-    if (input[0] == 'R')
+    int prev = pos;
+    int diff = input[0] == 'R' ? num : -num;
+    pos += diff;
+    if (diff > 0)
     {
-        pos = (pos + num) % 100;
+        ans += pos / 100;
     }
-    else if (input[0] == 'L')
+    else
     {
-        pos = (pos - num) % 100;
-        if (pos < 0)
+        if((prev != 0 && pos < 0)
+            || pos == 0)
         {
-            pos += 100;
+            ans++;
         }
+        ans -= pos / 100;
     }
 
-    if(pos == 0)
-    {
-        ans++;
-    }
+    pos = ((pos % 100) + 100) % 100;
 }
 
 Console.WriteLine(ans);
