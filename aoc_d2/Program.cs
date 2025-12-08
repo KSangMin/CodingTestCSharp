@@ -5,16 +5,40 @@ foreach (string range in s)
 {
     long[] ab = range.Split('-').Select(long.Parse).ToArray();
 
-    for(long i = ab[0]; i <= ab[1]; i++)
+    for (long i = ab[0]; i <= ab[1]; i++)
     {
         string num = i.ToString();
-        if(num.Length % 2 == 1)
+
+        bool isInValid = false;
+        for (int length = 1; length <= num.Length / 2; length++)
         {
-            continue;
+            string before = num.Substring(0, length);
+
+            isInValid = true;
+            for (int start = length; start < num.Length; start += length)
+            {
+                if(start + length > num.Length)
+                {
+                    isInValid = false;
+                    break;
+                }
+
+                string now = num.Substring(start, length);
+                if (before != now)
+                {
+                    isInValid = false;
+                    break;
+                }
+                before = now;
+            }
+
+            if (isInValid)
+            {
+                break;
+            }
         }
 
-        if(num.Substring(0, num.Length / 2)
-            == num.Substring(num.Length / 2, num.Length / 2))
+        if (isInValid)
         {
             ans += i;
         }
