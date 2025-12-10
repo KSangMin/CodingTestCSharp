@@ -1,43 +1,30 @@
 ﻿int n = 200;
 
-int ans = 0;
+long ans = 0;
 for (int i = 0; i < n; i++)
 {
     string s = Console.ReadLine()!;
 
-    int maxId = 0;
-    char max = '1';
-    for(int j = 0; j < s.Length - 1; j++)
-    {
-        if(s[j] > max)
-        {
-            max = s[j];
-            maxId = j;
+    int toRemove = s.Length - 12;
 
-            if(max == '9')
-            {
-                break;
-            }
+    Stack<char> battery = new();
+    foreach (char c in s)
+    {
+        while(battery.Count > 0 && toRemove > 0 && battery.Peek() < c)
+        {
+            battery.Pop();
+            toRemove--;
         }
+        battery.Push(c);
     }
 
-    int nMaxId = 0;
-    char nMax = '1';
-    for (int j = maxId + 1; j < s.Length; j++)
+    while (toRemove > 0)
     {
-        if (s[j] > nMax)
-        {
-            nMax = s[j];
-            nMaxId = j;
-
-            if (nMax == '9')
-            {
-                break;
-            }
-        }
+        battery.Pop();
+        toRemove--;
     }
 
-    ans += (max - '0') * 10 + (nMax - '0');
+    ans += long.Parse(new string(battery.Reverse().ToArray()));
 }
 
 Console.WriteLine(ans);
