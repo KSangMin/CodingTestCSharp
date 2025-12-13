@@ -1,45 +1,64 @@
-﻿int n = 138;
-int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
+﻿int[] dx = { -1, -1, -1, 0, 0, 1, 1, 1 };
 int[] dy = { -1, 0, 1, -1, 1, -1, 0, 1 };
 
-string[] grid = new string[n];
+int n = 138;
+char[][] grid = new char[n][];
 for (int i = 0; i < n; i++)
 {
-    grid[i] = Console.ReadLine()!;
+    grid[i] = Console.ReadLine()!.ToCharArray();
 }
 
-int count = 0;
-for (int i = 0; i < n; i++)
+int ans = 0;
+while (true)
 {
-    for (int j = 0; j < n; j++)
+    int count = CountRolls(grid);
+    if (count == 0)
     {
-        if (grid[i][j] == '@')
+        break;
+    }
+
+    ans += count;
+}
+
+Console.WriteLine(ans);
+
+int CountRolls(char[][] grid)
+{
+    int count = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
         {
-            int atCount = 0;
-            for (int d = 0; d < 8; d++)
+            if (grid[i][j] == '@')
             {
-                int nX = i + dx[d];
-                int nY = j + dy[d];
-
-                if (nX >= 0 && nX < n 
-                    && nY >= 0 && nY < n
-                    && grid[nX][nY] == '@')
+                int atCount = 0;
+                for (int d = 0; d < 8; d++)
                 {
-                    atCount++;
+                    int nX = i + dx[d];
+                    int nY = j + dy[d];
+
+                    if (nX >= 0 && nX < n
+                        && nY >= 0 && nY < n
+                        && grid[nX][nY] == '@')
+                    {
+                        atCount++;
+                    }
+
+                    if (atCount >= 4)
+                    {
+                        break;
+                    }
                 }
 
-                if(atCount >= 4)
+                if (atCount < 4)
                 {
-                    break;
+                    grid[i][j] = '.';
+                    count++;
                 }
-            }
-
-            if (atCount < 4)
-            {
-                count++;
             }
         }
     }
-}
 
-Console.WriteLine(count);
+    return count;
+}
