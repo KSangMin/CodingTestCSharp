@@ -3,49 +3,28 @@
 int n = int.Parse(Console.ReadLine()!);
 int[] arr = Console.ReadLine()!.Split().Select(int.Parse).ToArray();
 
+int count = 0;
 StringBuilder sb = new();
-int i = 0;
-while (i < 100)
+for(int i = 1; i <= n; i++)
 {
-    bool isChanged = false;
-
-    for (int j = 0; j < n; j++)
+    if (arr[i - 1] == i)
     {
-        if (arr[j] == j + 1)
-        {
-            continue;
-        }
-
-        for (int k = j + 1; k < n; k++)
-        {
-            if (arr[k] == j + 1)
-            {
-                Swap(arr, j, k);
-                sb.AppendLine($"{j + 1} {k + 1}");
-                isChanged = true;
-                break;
-            }
-        }
-
-        break;
+        continue;
     }
 
-    if (!isChanged)
+    int targetIndex = Array.IndexOf(arr, i);
+    Swap(arr, i - 1, targetIndex);
+    sb.AppendLine($"{i} {targetIndex + 1}");
+
+    if(count++ > 100)
     {
-        break;
+        Console.WriteLine(-1);
+        return;
     }
-    i++;
 }
 
-if (i >= 100)
-{
-    Console.WriteLine(-1);
-}
-else
-{
-    Console.WriteLine(i);
-    Console.Write(sb.ToString());
-}
+Console.WriteLine(count);
+Console.Write(sb.ToString());
 
 void Swap(int[] arr, int a, int b)
 {
