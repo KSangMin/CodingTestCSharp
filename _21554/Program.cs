@@ -16,7 +16,7 @@ for(int i = 1; i <= n; i++)
     Swap(arr, i - 1, targetIndex);
     sb.AppendLine($"{i} {targetIndex + 1}");
 
-    if(count++ > 100)
+    if(++count > 100)
     {
         Console.WriteLine(-1);
         return;
