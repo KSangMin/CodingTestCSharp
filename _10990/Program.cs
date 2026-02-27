@@ -1,20 +1,16 @@
-﻿int sum = 0;
+﻿using System.Text;
 
-List<int> science = new();
-List<int> history = new();
+int n = int.Parse(Console.ReadLine()!);
 
-for (int i = 0;  i < 4;  i++)
+StringBuilder sb = new();
+
+sb.AppendLine(new string(' ', n - 1) + '*');
+for (int i = 1; i < n; i++)
 {
-    science.Add(int.Parse(Console.ReadLine()));
+    sb.Append(new string(' ', n - i - 1));
+    sb.Append('*');
+    sb.Append(new string(' ', 2 * i - 1));
+    sb.AppendLine("*");
 }
 
-for (int i = 0; i < 2; i++)
-{
-    history.Add(int.Parse(Console.ReadLine()));
-}
-
-sum += science.Sum() + history.Sum();
-
-sum -= science.Min() + history.Min();
-
-Console.WriteLine(sum);
+Console.Write(sb.ToString());
