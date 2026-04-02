@@ -18,8 +18,8 @@ long[,] MatMul(long[,] a, long[,] b)
             for (int k = 0; k < len; k++)
             {
                 result[i, j] += (a[i, k] * b[k, j]) % MOD;
+                result[i, j] %= MOD;
             }
-            result[i, j] %= MOD;
         }
     }
 
@@ -28,23 +28,18 @@ long[,] MatMul(long[,] a, long[,] b)
 
 long[,] MatPow(long[,] a, long e)
 {
-    int len = a.GetLength(0);
-    long[,] result = new long[len, len];
-    if (e == 1)
+    long[,] unit = { { 1, 0 }, { 0, 1 } };
+    long[,] baseMat = a;
+    
+    while(e > 0)
     {
-        for (int i = 0; i < len; i++)
+        if (e % 2 == 1)
         {
-            for (int j = 0; j < len; j++)
-            {
-                result[i, j] = a[i, j] % MOD;
-            }
+            unit = MatMul(unit, baseMat);
         }
-
-        return result;
+        baseMat = MatMul(baseMat, baseMat);
+        e /= 2;
     }
 
-    long[,] half = MatPow(a, e / 2);
-    result = MatMul(half, half);
-
-    return e % 2 == 1 ? MatMul(result, a) : result;
+    return unit;
 }
